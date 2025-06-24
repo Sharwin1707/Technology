@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="40dp"
+    android:height="40dp"
+    android:viewportWidth="40"
+    android:viewportHeight="40">
+
+    <!-- Outer gear teeth -->
+    <path
+        android:fillColor="#90CAF9"
+        android:pathData="M20,2 L22,0 L26,0 L28,2 L30,8 L32,10 L38,12 L40,16 L38,20 L40,24 L38,28 L32,30 L30,32 L28,38 L26,40 L22,40 L20,38 L18,32 L16,30 L10,28 L8,24 L10,20 L8,16 L10,12 L16,10 L18,8 Z" />
+
+    <!-- Inner circle -->
+    <path
+        android:fillColor="#42A5F5"
+        android:pathData="M20,8 A12,12 0 1,1 20,32 A12,12 0 1,1 20,8 Z" />
+
+    <!-- Center hole -->
+    <path
+        android:fillColor="#1976D2"
+        android:pathData="M20,14 A6,6 0 1,1 20,26 A6,6 0 1,1 20,14 Z" />
+
+    <!-- Center dot -->
+    <path
+        android:fillColor="#FFFFFF"
+        android:pathData="M20,17 A3,3 0 1,1 20,23 A3,3 0 1,1 20,17 Z" />
+</vector>

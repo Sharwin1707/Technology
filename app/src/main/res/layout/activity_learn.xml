@@ -1,0 +1,302 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/scrollView"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/gradient_bg"
+    android:fillViewport="true">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="20dp"
+        android:gravity="center_horizontal">
+
+        <!-- Header Section -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:gravity="center"
+            android:background="#40FFFFFF"
+            android:padding="16dp"
+            android:layout_marginBottom="20dp"
+            android:elevation="2dp">
+
+            <TextView
+                android:id="@+id/headerTitle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="🤖 Computer Vision Explained"
+                android:textSize="24sp"
+                android:textStyle="bold"
+                android:textColor="@color/primary_blue"
+                android:gravity="center"
+                android:layout_marginBottom="8dp" />
+
+            <TextView
+                android:id="@+id/headerSubtitle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Learn how computers see the world!"
+                android:textSize="16sp"
+                android:textColor="@color/secondary_purple"
+                android:textStyle="italic"
+                android:gravity="center" />
+
+        </LinearLayout>
+
+        <!-- Robot Visual with Animation Container -->
+        <FrameLayout
+            android:id="@+id/robotContainer"
+            android:layout_width="280dp"
+            android:layout_height="220dp"
+            android:layout_marginBottom="30dp">
+
+            <!-- Robot Shadow -->
+            <View
+                android:layout_width="200dp"
+                android:layout_height="20dp"
+                android:layout_gravity="bottom|center_horizontal"
+                android:layout_marginBottom="5dp"
+                android:background="#30000000"
+                android:alpha="0.5" />
+
+            <!-- Robot Image -->
+            <ImageView
+                android:id="@+id/robotVisual"
+                android:layout_width="200dp"
+                android:layout_height="200dp"
+                android:layout_gravity="center"
+                android:src="@drawable/robot_face"
+                android:contentDescription="Friendly AI Robot"
+                android:elevation="4dp"
+                android:scaleType="centerCrop" />
+
+            <!-- Blinking Eye Effect -->
+            <View
+                android:id="@+id/eyeGlow"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:layout_gravity="center"
+                android:layout_marginTop="-20dp"
+                android:background="#80FF5722"
+                android:alpha="0.7" />
+
+        </FrameLayout>
+
+        <!-- Explanation Cards -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:layout_marginBottom="30dp">
+
+            <!-- Card 1: Eyes -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:background="#FFFFFF"
+                android:padding="16dp"
+                android:layout_marginBottom="12dp"
+                android:elevation="4dp"
+                android:gravity="center_vertical">
+
+                <TextView
+                    android:layout_width="60dp"
+                    android:layout_height="60dp"
+                    android:text="👀"
+                    android:textSize="40sp"
+                    android:gravity="center"
+                    android:background="#E3F2FD"
+                    android:layout_marginEnd="16dp" />
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Computers Have Eyes Too!"
+                        android:textSize="18sp"
+                        android:textStyle="bold"
+                        android:textColor="@color/primary_blue"
+                        android:layout_marginBottom="4dp" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="They use cameras to capture pictures, just like your phone!"
+                        android:textSize="14sp"
+                        android:textColor="@color/text_dark"
+                        android:lineSpacingExtra="2dp" />
+
+                </LinearLayout>
+
+            </LinearLayout>
+
+            <!-- Card 2: Brain -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:background="#FFFFFF"
+                android:padding="16dp"
+                android:layout_marginBottom="12dp"
+                android:elevation="4dp"
+                android:gravity="center_vertical">
+
+                <TextView
+                    android:layout_width="60dp"
+                    android:layout_height="60dp"
+                    android:text="🧠"
+                    android:textSize="40sp"
+                    android:gravity="center"
+                    android:background="#F3E5F5"
+                    android:layout_marginEnd="16dp" />
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Smart Processing Power"
+                        android:textSize="18sp"
+                        android:textStyle="bold"
+                        android:textColor="@color/secondary_purple"
+                        android:layout_marginBottom="4dp" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Special programs detect colors, shapes, faces, and objects!"
+                        android:textSize="14sp"
+                        android:textColor="@color/text_dark"
+                        android:lineSpacingExtra="2dp" />
+
+                </LinearLayout>
+
+            </LinearLayout>
+
+            <!-- Card 3: Computer Vision -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:background="#FFFFFF"
+                android:padding="16dp"
+                android:layout_marginBottom="12dp"
+                android:elevation="4dp"
+                android:gravity="center_vertical">
+
+                <TextView
+                    android:layout_width="60dp"
+                    android:layout_height="60dp"
+                    android:text="🤖"
+                    android:textSize="40sp"
+                    android:gravity="center"
+                    android:background="#E8F5E8"
+                    android:layout_marginEnd="16dp" />
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="That's Computer Vision!"
+                        android:textSize="18sp"
+                        android:textStyle="bold"
+                        android:textColor="@color/accent_green"
+                        android:layout_marginBottom="4dp" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="It's like giving superpowers to machines to see and understand!"
+                        android:textSize="14sp"
+                        android:textColor="@color/text_dark"
+                        android:lineSpacingExtra="2dp" />
+
+                </LinearLayout>
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+        <!-- Fun Fact Box -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:background="#FFF3E0"
+            android:padding="16dp"
+            android:layout_marginBottom="30dp"
+            android:elevation="2dp">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="🎉 Fun Fact!"
+                android:textSize="20sp"
+                android:textStyle="bold"
+                android:textColor="@color/accent_orange"
+                android:layout_marginBottom="8dp" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Your phone already uses computer vision when it recognizes your face to unlock, or when you use fun filters on photos!"
+                android:textSize="16sp"
+                android:textColor="@color/text_dark"
+                android:lineSpacingExtra="4dp" />
+
+        </LinearLayout>
+
+        <!-- Action Button -->
+        <FrameLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="20dp">
+
+            <!-- Button Shadow -->
+            <View
+                android:layout_width="220dp"
+                android:layout_height="65dp"
+                android:layout_marginTop="4dp"
+                android:background="#30000000" />
+
+            <!-- Main Button -->
+            <Button
+                android:id="@+id/tryNowButton"
+                android:layout_width="220dp"
+                android:layout_height="65dp"
+                android:text="🚀 Try It Now!"
+                android:textSize="20sp"
+                android:textStyle="bold"
+                android:textColor="@android:color/white"
+                android:background="@drawable/button_gradient"
+                android:elevation="6dp"
+                android:layout_gravity="center" />
+
+        </FrameLayout>
+
+
+
+
+
+    </LinearLayout>
+
+</ScrollView>

@@ -1,0 +1,470 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/gradient_bg">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="24dp">
+
+        <!-- Header Section -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:gravity="center"
+            android:layout_marginBottom="32dp">
+
+            <ImageView
+                android:layout_width="48dp"
+                android:layout_height="48dp"
+                android:src="@drawable/camera"
+
+                android:layout_marginBottom="12dp" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Filter Studio"
+                android:textSize="28sp"
+                android:textStyle="bold"
+                android:textColor="#1F2937"
+                android:layout_marginBottom="4dp"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Create stunning AR filters"
+                android:textSize="14sp"
+                android:textColor="#6B7280"
+                android:alpha="0.8"/>
+
+        </LinearLayout>
+
+        <!-- Preview Card -->
+        <androidx.cardview.widget.CardView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="24dp"
+            app:cardCornerRadius="20dp"
+            app:cardElevation="8dp"
+            android:backgroundTint="#FFFFFF">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:padding="24dp"
+                android:gravity="center">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Live Preview"
+                    android:textSize="16sp"
+                    android:textStyle="bold"
+                    android:textColor="#374151"
+                    android:layout_marginBottom="16dp"/>
+
+                <!-- Preview Container with Glow Effect -->
+                <FrameLayout
+                    android:layout_width="200dp"
+                    android:layout_height="200dp"
+                    android:background="@drawable/preview_glow"
+                    android:layout_marginBottom="16dp">
+
+                    <View
+                        android:id="@+id/shapeView"
+                        android:layout_width="180dp"
+                        android:layout_height="180dp"
+                        android:layout_gravity="center"
+                        android:background="@drawable/circle_shape"
+                        android:elevation="4dp" />
+
+                </FrameLayout>
+
+                <!-- AI Status Indicator -->
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:gravity="center"
+
+                    android:padding="12dp">
+
+                    <View
+                        android:layout_width="8dp"
+                        android:layout_height="8dp"
+
+                        android:layout_marginEnd="8dp" />
+
+                    <TextView
+                        android:id="@+id/aiPreview"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="AI Detection: Red Circle"
+                        android:textSize="14sp"
+                        android:textColor="#059669"
+                        android:textStyle="bold"/>
+
+                </LinearLayout>
+
+            </LinearLayout>
+
+        </androidx.cardview.widget.CardView>
+
+        <!-- Color Controls Card -->
+        <androidx.cardview.widget.CardView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="16dp"
+            app:cardCornerRadius="16dp"
+            app:cardElevation="4dp"
+            android:backgroundTint="#FFFFFF">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:padding="20dp">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:gravity="center_vertical"
+                    android:layout_marginBottom="16dp">
+
+                    <ImageView
+                        android:layout_width="24dp"
+                        android:layout_height="24dp"
+                        android:src="@drawable/pallette"
+
+                        android:layout_marginEnd="8dp" />
+
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="Color Mixer"
+                        android:textSize="18sp"
+                        android:textStyle="bold"
+                        android:textColor="#1F2937"/>
+
+                    <TextView
+                        android:id="@+id/colorHex"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="#FF5733"
+                        android:textSize="12sp"
+                        android:textColor="#6B7280"
+                        android:background="@drawable/face_detector_background"
+                        android:padding="6dp"/>
+
+                </LinearLayout>
+
+                <!-- Red Slider -->
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:gravity="center_vertical"
+                    android:layout_marginBottom="12dp">
+
+                    <View
+                        android:layout_width="16dp"
+                        android:layout_height="16dp"
+                        android:background="@drawable/circle"
+                        android:layout_marginEnd="12dp" />
+
+                    <SeekBar
+                        android:id="@+id/redSeek"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:max="255"
+                        android:progressTint="#EF4444"
+                        android:thumbTint="#DC2626" />
+
+                    <TextView
+                        android:id="@+id/redValue"
+                        android:layout_width="32dp"
+                        android:layout_height="wrap_content"
+                        android:text="128"
+                        android:textSize="12sp"
+                        android:textColor="#6B7280"
+                        android:gravity="center"
+                        android:layout_marginStart="8dp"/>
+
+                </LinearLayout>
+
+                <!-- Green Slider -->
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:gravity="center_vertical"
+                    android:layout_marginBottom="12dp">
+
+                    <View
+                        android:layout_width="16dp"
+                        android:layout_height="16dp"
+                        android:background="@drawable/greencircle"
+                        android:layout_marginEnd="12dp" />
+
+                    <SeekBar
+                        android:id="@+id/greenSeek"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:max="255"
+                        android:progressTint="#22C55E"
+                        android:thumbTint="#16A34A" />
+
+                    <TextView
+                        android:id="@+id/greenValue"
+                        android:layout_width="32dp"
+                        android:layout_height="wrap_content"
+                        android:text="128"
+                        android:textSize="12sp"
+                        android:textColor="#6B7280"
+                        android:gravity="center"
+                        android:layout_marginStart="8dp"/>
+
+                </LinearLayout>
+
+                <!-- Blue Slider -->
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:gravity="center_vertical">
+
+                    <View
+                        android:layout_width="16dp"
+                        android:layout_height="16dp"
+                        android:background="@drawable/bluecircle"
+                        android:layout_marginEnd="12dp" />
+
+                    <SeekBar
+                        android:id="@+id/blueSeek"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:max="255"
+                        android:progressTint="#3B82F6"
+                        android:thumbTint="#2563EB" />
+
+                    <TextView
+                        android:id="@+id/blueValue"
+                        android:layout_width="32dp"
+                        android:layout_height="wrap_content"
+                        android:text="128"
+                        android:textSize="12sp"
+                        android:textColor="#6B7280"
+                        android:gravity="center"
+                        android:layout_marginStart="8dp"/>
+
+                </LinearLayout>
+
+            </LinearLayout>
+
+        </androidx.cardview.widget.CardView>
+
+        <!-- Size and Shape Controls -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_marginBottom="16dp">
+
+            <!-- Size Control Card -->
+            <androidx.cardview.widget.CardView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:layout_marginEnd="8dp"
+                app:cardCornerRadius="16dp"
+                app:cardElevation="4dp"
+                android:backgroundTint="#FFFFFF">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:padding="16dp">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:gravity="center_vertical"
+                        android:layout_marginBottom="12dp">
+
+                        <ImageView
+                            android:layout_width="20dp"
+                            android:layout_height="20dp"
+                            android:src="@drawable/resize"
+
+                            android:layout_marginEnd="6dp" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Size"
+                            android:textSize="14sp"
+                            android:textStyle="bold"
+                            android:textColor="#1F2937"/>
+
+                    </LinearLayout>
+
+                    <SeekBar
+                        android:id="@+id/sizeSeek"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:max="300"
+                        android:progress="150"
+                        android:progressTint="#8B5CF6"
+                        android:thumbTint="#7C3AED" />
+
+                    <TextView
+                        android:id="@+id/sizeValue"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="150dp"
+                        android:textSize="12sp"
+                        android:textColor="#6B7280"
+                        android:layout_gravity="center"
+                        android:layout_marginTop="4dp"/>
+
+                </LinearLayout>
+
+            </androidx.cardview.widget.CardView>
+
+            <!-- Shape Control Card -->
+            <androidx.cardview.widget.CardView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:layout_marginStart="8dp"
+                app:cardCornerRadius="16dp"
+                app:cardElevation="4dp"
+                android:backgroundTint="#FFFFFF">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:padding="16dp">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:gravity="center_vertical"
+                        android:layout_marginBottom="12dp">
+
+                        <ImageView
+                            android:layout_width="20dp"
+                            android:layout_height="20dp"
+                            android:src="@drawable/shapes"
+
+                            android:layout_marginEnd="6dp" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Shape"
+                            android:textSize="14sp"
+                            android:textStyle="bold"
+                            android:textColor="#1F2937"/>
+
+                    </LinearLayout>
+
+                    <RadioGroup
+                        android:id="@+id/shapeSelector"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical">
+
+                        <RadioButton
+                            android:id="@+id/shapeCircle"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Circle"
+                            android:textSize="12sp"
+                            android:checked="true"
+                            android:buttonTint="#F59E0B" />
+
+                        <RadioButton
+                            android:id="@+id/shapeSquare"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Square"
+                            android:textSize="12sp"
+                            android:buttonTint="#F59E0B" />
+
+                    </RadioGroup>
+
+                </LinearLayout>
+
+            </androidx.cardview.widget.CardView>
+
+        </LinearLayout>
+
+        <!-- Action Buttons -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_marginTop="8dp">
+
+            <Button
+                android:id="@+id/resetButton"
+                android:layout_width="0dp"
+                android:layout_height="48dp"
+                android:layout_weight="1"
+                android:layout_marginEnd="6dp"
+                android:text="Reset"
+                android:textColor="#6B7280"
+                android:background="@drawable/button_secondary"
+                android:textStyle="bold"
+                android:textSize="14sp" />
+
+            <Button
+                android:id="@+id/applyButton"
+                android:layout_width="0dp"
+                android:layout_height="48dp"
+                android:layout_weight="1.5"
+                android:layout_marginStart="3dp"
+                android:layout_marginEnd="3dp"
+                android:text="Apply Filter"
+                android:textColor="#FFFFFF"
+                android:background="@drawable/button_primary"
+                android:textStyle="bold"
+                android:textSize="14sp"
+                android:elevation="2dp" />
+
+            <Button
+                android:id="@+id/nextButton"
+                android:layout_width="0dp"
+                android:layout_height="48dp"
+                android:layout_weight="1"
+                android:layout_marginStart="6dp"
+                android:text="Next →"
+                android:textColor="#FFFFFF"
+                android:background="@drawable/button_next"
+                android:textStyle="bold"
+                android:textSize="14sp"
+                android:elevation="2dp" />
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+</ScrollView>

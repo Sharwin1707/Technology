@@ -1,0 +1,206 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/mainLayout"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/gradient_bg"
+    tools:context="com.sharwin.technology.MainActivity">
+
+    <!-- Floating clouds animation background -->
+    <ImageView
+        android:id="@+id/cloud1"
+        android:layout_width="80dp"
+        android:layout_height="50dp"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentStart="true"
+        android:layout_marginTop="40dp"
+        android:layout_marginStart="20dp"
+        android:src="@drawable/cloud"
+        android:alpha="0.7"
+        android:contentDescription="Cloud decoration" />
+
+    <ImageView
+        android:id="@+id/cloud2"
+        android:layout_width="60dp"
+        android:layout_height="40dp"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentEnd="true"
+        android:layout_marginTop="80dp"
+        android:layout_marginEnd="30dp"
+        android:src="@drawable/cloud"
+        android:alpha="0.6"
+        android:contentDescription="Cloud decoration" />
+
+    <!-- Main content container -->
+    <LinearLayout
+        android:id="@+id/contentContainer"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:orientation="vertical"
+        android:gravity="center"
+        android:padding="20dp">
+
+        <!-- Animated robot with glowing eyes -->
+        <FrameLayout
+            android:id="@+id/robotContainer"
+            android:layout_width="250dp"
+            android:layout_height="250dp"
+            android:layout_marginBottom="20dp">
+
+            <!-- Robot shadow -->
+            <ImageView
+                android:id="@+id/robotShadow"
+                android:layout_width="220dp"
+                android:layout_height="30dp"
+                android:layout_gravity="bottom|center_horizontal"
+                android:layout_marginBottom="10dp"
+                android:src="@drawable/shadow_oval"
+                android:alpha="0.3"
+                android:contentDescription="Robot shadow" />
+
+            <!-- Main robot image -->
+            <ImageView
+                android:id="@+id/robotImage"
+                android:layout_width="200dp"
+                android:layout_height="200dp"
+                android:layout_gravity="center"
+                android:src="@drawable/robot_eye"
+                android:contentDescription="Friendly AI Robot"
+                android:elevation="4dp" />
+
+            <!-- Sparkle effects around robot -->
+            <ImageView
+                android:id="@+id/sparkle1"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:layout_marginTop="20dp"
+                android:layout_marginStart="40dp"
+                android:src="@drawable/sparkle"
+                android:contentDescription="Sparkle effect" />
+
+            <ImageView
+                android:id="@+id/sparkle2"
+                android:layout_width="25dp"
+                android:layout_height="25dp"
+                android:layout_marginTop="60dp"
+                android:layout_marginEnd="30dp"
+                android:layout_gravity="end"
+                android:src="@drawable/sparkle"
+                android:contentDescription="Sparkle effect" />
+
+        </FrameLayout>
+
+        <!-- Title with colorful text -->
+        <TextView
+            android:id="@+id/appTitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="RoboVision"
+            android:textSize="32sp"
+            android:textStyle="bold"
+            android:fontFamily="@font/comic_sans_bold"
+            android:textColor="@color/primary_blue"
+            android:layout_marginBottom="8dp"
+            android:elevation="2dp"
+            android:shadowColor="@color/shadow_color"
+            android:shadowDx="2"
+            android:shadowDy="2"
+            android:shadowRadius="4" />
+
+        <!-- Subtitle with fun description -->
+        <TextView
+            android:id="@+id/subtitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="How Do Computers See?"
+            android:textSize="18sp"
+            android:textStyle="italic"
+            android:fontFamily="@font/comic_sans"
+            android:textColor="@color/secondary_purple"
+            android:layout_marginBottom="12dp" />
+
+        <!-- Welcome message -->
+        <TextView
+            android:id="@+id/welcomeText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Let's explore the amazing world of\ncomputer vision together! 🤖👁️"
+            android:textSize="16sp"
+            android:textColor="@color/text_dark"
+            android:fontFamily="@font/comic_sans"
+            android:gravity="center"
+            android:layout_marginBottom="30dp"
+            android:lineSpacingExtra="4dp" />
+
+        <!-- Start button with icon -->
+        <Button
+            android:id="@+id/startButton"
+            android:layout_width="200dp"
+            android:layout_height="60dp"
+            android:text="🚀 Start Adventure!"
+            android:textSize="18sp"
+            android:textStyle="bold"
+            android:fontFamily="@font/comic_sans_bold"
+            android:textColor="@android:color/white"
+            android:background="@drawable/button_gradient"
+            android:elevation="6dp"
+            android:layout_marginBottom="15dp"
+            android:stateListAnimator="@animator/button_press" />
+
+
+
+    </LinearLayout>
+
+    <!-- Fun decorative elements -->
+    <ImageView
+        android:id="@+id/gear1"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentStart="true"
+        android:layout_marginBottom="100dp"
+        android:layout_marginStart="30dp"
+        android:src="@drawable/gear"
+        android:alpha="0.4"
+        android:contentDescription="Decorative gear" />
+
+    <ImageView
+        android:id="@+id/circuit"
+        android:layout_width="60dp"
+        android:layout_height="60dp"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentEnd="true"
+        android:layout_marginBottom="120dp"
+        android:layout_marginEnd="40dp"
+        android:src="@drawable/circuit_pattern"
+        android:alpha="0.3"
+        android:contentDescription="Circuit decoration" />
+
+    <!-- Progress indicator for loading -->
+    <ProgressBar
+        android:id="@+id/loadingProgress"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_alignParentBottom="true"
+        android:layout_marginBottom="40dp"
+        android:visibility="gone"
+        android:indeterminateTint="@color/primary_blue" />
+
+    <!-- Version info -->
+    <TextView
+        android:id="@+id/versionText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="10dp"
+        android:text="v1.0 - Made with ❤️ for young scientists"
+        android:textSize="12sp"
+        android:textColor="@color/text_light"
+        android:fontFamily="@font/comic_sans" />
+
+</RelativeLayout>
+

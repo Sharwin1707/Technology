@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+
+<layer-list xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <!-- Outer white glow for contrast -->
+    <item>
+        <shape android:shape="oval">
+            <solid android:color="#15FFFFFF"/>
+            <size
+                android:width="200dp"
+                android:height="200dp"/>
+        </shape>
+    </item>
+
+    <!-- Middle gray glow -->
+    <item
+        android:left="8dp"
+        android:top="8dp"
+        android:right="8dp"
+        android:bottom="8dp">
+        <shape android:shape="oval">
+            <solid android:color="#25000000"/>
+            <size
+                android:width="184dp"
+                android:height="184dp"/>
+        </shape>
+    </item>
+
+    <!-- Inner subtle glow -->
+    <item
+        android:left="16dp"
+        android:top="16dp"
+        android:right="16dp"
+        android:bottom="16dp">
+        <shape android:shape="oval">
+            <solid android:color="#1A9CA3AF"/>
+            <size
+                android:width="168dp"
+                android:height="168dp"/>
+        </shape>
+    </item>
+
+    <!-- Center transparent area -->
+    <item
+        android:left="24dp"
+        android:top="24dp"
+        android:right="24dp"
+        android:bottom="24dp">
+        <shape android:shape="oval">
+            <solid android:color="#00FFFFFF"/>
+            <size
+                android:width="152dp"
+                android:height="152dp"/>
+        </shape>
+    </item>
+
+</layer-list>
