@@ -431,8 +431,8 @@
                 android:layout_weight="1"
                 android:layout_marginEnd="6dp"
                 android:text="Reset"
-                android:textColor="#6B7280"
-                android:background="@drawable/button_secondary"
+                android:textColor="@color/white"
+                android:background="@drawable/celebration_gradient_bg"
                 android:textStyle="bold"
                 android:textSize="14sp" />
 
@@ -445,7 +445,7 @@
                 android:layout_marginEnd="3dp"
                 android:text="Apply Filter"
                 android:textColor="#FFFFFF"
-                android:background="@drawable/button_primary"
+                android:background="@drawable/celebration_gradient_bg"
                 android:textStyle="bold"
                 android:textSize="14sp"
                 android:elevation="2dp" />
@@ -457,8 +457,8 @@
                 android:layout_weight="1"
                 android:layout_marginStart="6dp"
                 android:text="Next →"
-                android:textColor="#FFFFFF"
-                android:background="@drawable/button_next"
+                android:textColor="@color/white"
+                app:backgroundTint="#143D60"
                 android:textStyle="bold"
                 android:textSize="14sp"
                 android:elevation="2dp" />

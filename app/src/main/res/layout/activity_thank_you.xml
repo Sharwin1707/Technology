@@ -1,96 +1,121 @@
 <?xml version="1.0" encoding="utf-8"?>
-
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:orientation="vertical"
-    android:background="@drawable/celebration_gradient_bg"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:gravity="center"
-    android:padding="32dp"
-    android:animateLayoutChanges="true">
+    android:background="@drawable/score_background"
+    android:padding="16dp">
 
     <!-- Celebration Icon -->
     <ImageView
         android:id="@+id/celebrationIcon"
-        android:layout_width="120dp"
-        android:layout_height="120dp"
-        android:src="@drawable/ic_celebration_trophy"
-        android:layout_marginBottom="24dp"
-        android:contentDescription="Celebration Trophy"
-        android:scaleType="centerInside" />
+        android:layout_width="80dp"
+        android:layout_height="80dp"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="40dp"
+        android:src="@drawable/ic_celebration"
+        android:contentDescription="Celebration Icon" />
 
-    <!-- Main Thank You Card -->
+    <!-- Main Card -->
     <androidx.cardview.widget.CardView
         android:id="@+id/thankYouCard"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="40dp"
-        app:cardCornerRadius="20dp"
-        app:cardElevation="12dp"
-        android:background="@drawable/card_shimmer_bg">
+        android:layout_below="@id/celebrationIcon"
+        android:layout_marginTop="20dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginEnd="16dp"
+        app:cardCornerRadius="16dp"
+        app:cardElevation="8dp"
+        android:backgroundTint="@color/white">
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
-            android:padding="32dp"
+            android:padding="24dp"
             android:gravity="center">
 
-            <!-- Animated Thank You Text -->
+            <!-- Thank You Message -->
             <TextView
                 android:id="@+id/thankYouMessage"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="🎉 THANK YOU! 🎉"
-                android:textSize="32sp"
-                android:textColor="#1A237E"
+                android:textSize="28sp"
                 android:textStyle="bold"
+                android:textColor="@color/black"
                 android:gravity="center"
-                android:fontFamily="@font/comic_sans"
-                android:letterSpacing="0.05"
-                android:layout_marginBottom="12dp" />
+                android:layout_marginBottom="8dp" />
 
-            <!-- Subtitle -->
+            <!-- Congratulations Subtitle -->
             <TextView
                 android:id="@+id/congratsSubtitle"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="You did amazing!"
                 android:textSize="18sp"
-                android:textColor="#5C6BC0"
-                android:textStyle="normal"
+                android:textColor="@color/text_secondary"
                 android:gravity="center"
-                android:alpha="0.9" />
+                android:layout_marginBottom="20dp" />
 
-            <!-- Fun Stats or Score Display -->
+            <!-- Main Score Display -->
+            <TextView
+                android:id="@+id/scoreValue"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="100 pts"
+                android:textSize="36sp"
+                android:textStyle="bold"
+                android:textColor="@color/black"
+                android:gravity="center"
+                android:layout_marginBottom="20dp" />
+
+            <!-- Detailed Score Breakdown -->
             <LinearLayout
-                android:id="@+id/statsContainer"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:gravity="center"
-                android:layout_marginTop="20dp"
-                android:padding="16dp"
-                android:background="@drawable/stats_rounded_bg">
+                android:orientation="vertical"
+                android:layout_marginBottom="20dp">
 
+                <!-- Game Score -->
                 <TextView
-                    android:id="@+id/scoreLabel"
-                    android:layout_width="wrap_content"
+                    android:id="@+id/gameScoreText"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="⭐ Final Score: "
+                    android:text="Game Score: 0"
                     android:textSize="16sp"
-                    android:textColor="#37474F"
-                    android:textStyle="bold" />
+                    android:textColor="@color/text_primary"
+                    android:gravity="center"
+                    android:layout_marginBottom="8dp"
+                    android:background="@drawable/score_item_bg"
+                    android:padding="12dp" />
 
+                <!-- Quiz Score -->
                 <TextView
-                    android:id="@+id/scoreValue"
-                    android:layout_width="wrap_content"
+                    android:id="@+id/quizScoreText"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="100%"
-                    android:textSize="20sp"
-                    android:textColor="#4CAF50"
-                    android:textStyle="bold" />
+                    android:text="Quiz Score: 0 (0/6 correct)"
+                    android:textSize="16sp"
+                    android:textColor="@color/text_primary"
+                    android:gravity="center"
+                    android:layout_marginBottom="8dp"
+                    android:background="@drawable/score_item_bg"
+                    android:padding="12dp" />
+
+                <!-- Total Score -->
+                <TextView
+                    android:id="@+id/totalScoreText"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Total Score: 0"
+                    android:textSize="18sp"
+                    android:textStyle="bold"
+                    android:textColor="@color/black"
+                    android:gravity="center"
+                    android:background="@drawable/total_score_bg"
+                    android:padding="12dp" />
 
             </LinearLayout>
 
@@ -98,91 +123,53 @@
 
     </androidx.cardview.widget.CardView>
 
-    <!-- Action Buttons with Enhanced Styling -->
+    <!-- Buttons Container -->
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_below="@id/thankYouCard"
+        android:layout_marginTop="30dp"
         android:orientation="vertical"
         android:gravity="center">
 
         <!-- Play Again Button -->
-        <androidx.cardview.widget.CardView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="16dp"
-            app:cardCornerRadius="25dp"
-            app:cardElevation="6dp">
+        <Button
+            android:id="@+id/playAgainButton"
+            android:layout_width="200dp"
+            android:layout_height="56dp"
+            android:text="Play Again"
+            android:textSize="16sp"
+            android:textStyle="bold"
+            android:textColor="@color/white"
+            app:backgroundTint="#143D60"
+            android:layout_marginBottom="12dp"
+            android:elevation="4dp" />
 
-            <Button
-                android:id="@+id/playAgainButton"
-                android:layout_width="match_parent"
-                android:layout_height="56dp"
-                android:text="🎮 PLAY AGAIN"
-                android:textSize="18sp"
-                android:textStyle="bold"
-                android:background="@drawable/play_again_gradient"
-                android:textColor="#FFFFFF"
-                android:letterSpacing="0.1"
-                android:elevation="0dp"
-                android:stateListAnimator="@null" />
-
-        </androidx.cardview.widget.CardView>
-
-        <!-- Share Achievement Button -->
-        <androidx.cardview.widget.CardView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="16dp"
-            app:cardCornerRadius="25dp"
-            app:cardElevation="6dp">
-
-            <Button
-                android:id="@+id/shareButton"
-                android:layout_width="match_parent"
-                android:layout_height="56dp"
-                android:text="🏆 SHARE ACHIEVEMENT"
-                android:textSize="18sp"
-                android:textStyle="bold"
-                android:background="@drawable/share_gradient"
-                android:textColor="#FFFFFF"
-                android:letterSpacing="0.1"
-                android:elevation="0dp"
-                android:stateListAnimator="@null" />
-
-        </androidx.cardview.widget.CardView>
+        <!-- Share Button -->
+        <Button
+            android:id="@+id/shareButton"
+            android:layout_width="200dp"
+            android:layout_height="56dp"
+            android:text="Share Achievement"
+            android:textSize="16sp"
+            android:textStyle="bold"
+            android:textColor="@color/black"
+            android:background="@drawable/face_detector_background"
+            android:layout_marginBottom="12dp"
+            android:elevation="4dp" />
 
         <!-- Exit Button -->
-        <androidx.cardview.widget.CardView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            app:cardCornerRadius="25dp"
-            app:cardElevation="6dp">
-
-            <Button
-                android:id="@+id/exitButton"
-                android:layout_width="match_parent"
-                android:layout_height="56dp"
-                android:text="🚪 EXIT"
-                android:textSize="18sp"
-                android:textStyle="bold"
-                android:background="@drawable/exit_gradient"
-                android:textColor="#FFFFFF"
-                android:letterSpacing="0.1"
-                android:elevation="0dp"
-                android:stateListAnimator="@null" />
-
-        </androidx.cardview.widget.CardView>
+        <Button
+            android:id="@+id/exitButton"
+            android:layout_width="200dp"
+            android:layout_height="56dp"
+            android:text="Exit"
+            android:textSize="16sp"
+            android:textStyle="bold"
+            android:textColor="@color/black"
+            android:background="@drawable/face_detector_background"
+            android:elevation="4dp" />
 
     </LinearLayout>
 
-    <!-- Floating Particles Effect Container -->
-    <FrameLayout
-        android:id="@+id/particlesContainer"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_gravity="center"
-        android:clickable="false"
-        android:focusable="false" />
-
-
-</LinearLayout>
+</RelativeLayout>

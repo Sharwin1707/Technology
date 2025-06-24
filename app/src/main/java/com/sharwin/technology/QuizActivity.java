@@ -1,7 +1,5 @@
 package com.sharwin.technology;
 
-
-
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
@@ -36,9 +34,13 @@ public class QuizActivity extends AppCompatActivity {
     private int totalScore = 0;
     private CountDownTimer questionTimer;
     private boolean answered = false;
+    private boolean isActivityPaused = false;
+    private long remainingTime = 0; // Track remaining time for pause/resume
 
     private static final int QUESTION_TIME_LIMIT = 15000; // 15 seconds per question
     private static final int POINTS_PER_CORRECT = 10;
+    private static final int POINTS_DEDUCTED_WRONG = 5; // Points deducted for wrong answer
+    private static final int POINTS_DEDUCTED_TIMEOUT = 3; // Points deducted for timeout
 
     // Quiz questions array
     private QuizQuestion[] questions = {
@@ -84,9 +86,14 @@ public class QuizActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_quiz);
-        correctSoundPlayer = MediaPlayer.create(this, R.raw.correct);
-        wrongSoundPlayer = MediaPlayer.create(this, R.raw.wrong);
 
+        // Initialize sound players
+        try {
+            correctSoundPlayer = MediaPlayer.create(this, R.raw.correct);
+            wrongSoundPlayer = MediaPlayer.create(this, R.raw.wrong);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
 
         // Get game score from previous activity
         gameScore = getIntent().getIntExtra("gameScore", 0);
@@ -129,6 +136,7 @@ public class QuizActivity extends AppCompatActivity {
         }
 
         answered = false;
+        remainingTime = QUESTION_TIME_LIMIT; // Reset remaining time
         QuizQuestion currentQuestion = questions[currentQuestionIndex];
 
         // Update UI
@@ -140,17 +148,24 @@ public class QuizActivity extends AppCompatActivity {
         option4.setText(currentQuestion.options[3]);
 
         // Set question image
-        questionImage.setImageResource(getResources().getIdentifier(
-                currentQuestion.imageResource, "drawable", getPackageName()));
+        try {
+            questionImage.setImageResource(getResources().getIdentifier(
+                    currentQuestion.imageResource, "drawable", getPackageName()));
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
 
-        // Reset button states - including removing any icons
+        // Reset button states and timer color
         resetButtonStates();
+        timerText.setTextColor(Color.BLACK);
 
         // Update progress
         progressBar.setProgress(currentQuestionIndex);
 
-        // Start timer for this question
-        startQuestionTimer();
+        // Start timer for this question (only if not paused)
+        if (!isActivityPaused) {
+            startQuestionTimer();
+        }
     }
 
     private void resetButtonStates() {
@@ -168,36 +183,47 @@ public class QuizActivity extends AppCompatActivity {
         if (answered) return;
 
         answered = true;
-        questionTimer.cancel();
+        // Cancel timer properly
+        cancelTimer();
 
         QuizQuestion currentQuestion = questions[currentQuestionIndex];
         Button selectedButton = getButtonByIndex(selectedIndex);
         Button correctButton = getButtonByIndex(currentQuestion.correctAnswerIndex);
 
         if (selectedIndex == currentQuestion.correctAnswerIndex) {
-            correctSoundPlayer.start(); // Play correct sound
+            // Play correct sound
+            playSound(correctSoundPlayer);
+
             // Correct answer - green background with white text
             selectedButton.setBackgroundResource(R.drawable.correct_answer_bg);
             selectedButton.setTextColor(Color.GREEN);
             selectedButton.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.drawable.ic_check, 0);
 
+            // ADD POINTS FOR CORRECT ANSWER
             quizScore += POINTS_PER_CORRECT;
             totalScore += POINTS_PER_CORRECT;
             scoreText.setText("Total Score: " + totalScore);
-            Toast.makeText(this, "Correct! +" + POINTS_PER_CORRECT + " points", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, "🎉 Correct! +" + POINTS_PER_CORRECT + " points", Toast.LENGTH_SHORT).show();
         } else {
-            wrongSoundPlayer.start(); // Play wrong sound
+            // Play wrong sound
+            playSound(wrongSoundPlayer);
+
             // Wrong answer - red background with white text
             selectedButton.setBackgroundResource(R.drawable.wrong_answer_bg);
             selectedButton.setTextColor(Color.RED);
             selectedButton.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.drawable.ic_close, 0);
+
+            // DEDUCT POINTS FOR WRONG ANSWER
+            quizScore = Math.max(0, quizScore - POINTS_DEDUCTED_WRONG); // Ensure quiz score doesn't go below 0
+            totalScore = Math.max(gameScore, totalScore - POINTS_DEDUCTED_WRONG); // Ensure total doesn't go below game score
+            scoreText.setText("Total Score: " + totalScore);
 
             // Correct answer - green outline with green text
             correctButton.setBackgroundResource(R.drawable.correct_answer_outline);
             correctButton.setTextColor(ContextCompat.getColor(this, R.color.green));
             correctButton.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.drawable.ic_check, 0);
 
-            Toast.makeText(this, "Wrong! The correct answer is highlighted", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, "❌ Wrong! -" + POINTS_DEDUCTED_WRONG + " points. Correct answer highlighted", Toast.LENGTH_LONG).show();
         }
 
         // Disable all buttons and make others semi-transparent
@@ -215,6 +241,7 @@ public class QuizActivity extends AppCompatActivity {
             displayQuestion();
         }, 2000);
     }
+
     private Button getButtonByIndex(int index) {
         switch (index) {
             case 0: return option1;
@@ -226,51 +253,119 @@ public class QuizActivity extends AppCompatActivity {
     }
 
     private void startQuestionTimer() {
-        questionTimer = new CountDownTimer(QUESTION_TIME_LIMIT, 1000) {
+        // Cancel any existing timer first
+        cancelTimer();
+
+        // Use remaining time if resuming, otherwise use full time limit
+        long timeToUse = remainingTime > 0 ? remainingTime : QUESTION_TIME_LIMIT;
+
+        questionTimer = new CountDownTimer(timeToUse, 1000) {
             @Override
             public void onTick(long millisUntilFinished) {
-                timerText.setText("Time: " + millisUntilFinished / 1000 + "s");
+                remainingTime = millisUntilFinished; // Update remaining time
+                long secondsLeft = millisUntilFinished / 1000;
+
+                // Ensure UI updates are on main thread
+                runOnUiThread(() -> {
+                    if (timerText != null) {
+                        timerText.setText("Time: " + secondsLeft + "s");
+
+                        // Change timer color when time is running out
+                        if (secondsLeft <= 5) {
+                            timerText.setTextColor(Color.RED);
+                        } else if (secondsLeft <= 10) {
+                            timerText.setTextColor(Color.parseColor("#FF8C00")); // Orange
+                        } else {
+                            timerText.setTextColor(Color.BLACK);
+                        }
+                    }
+                });
             }
 
             @Override
             public void onFinish() {
-                if (!answered) {
-                    answered = true;
-                    QuizQuestion currentQuestion = questions[currentQuestionIndex];
-                    Button correctButton = getButtonByIndex(currentQuestion.correctAnswerIndex);
+                remainingTime = 0; // Reset remaining time
 
-                    // Highlight correct answer with outline
-                    correctButton.setBackgroundResource(R.drawable.correct_answer_outline);
-                    correctButton.setTextColor(ContextCompat.getColor(QuizActivity.this, R.color.green));
-                    correctButton.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.drawable.ic_check, 0);
-
-                    // Make other options semi-transparent
-                    Button[] buttons = {option1, option2, option3, option4};
-                    for (Button button : buttons) {
-                        if (button != correctButton) {
-                            button.setAlpha(0.6f);
-                        }
-                        button.setEnabled(false);
+                // Ensure this runs on main thread
+                runOnUiThread(() -> {
+                    if (!answered && !isActivityPaused) {
+                        handleTimeOut();
                     }
-
-                    Toast.makeText(QuizActivity.this, "Time's up! Correct answer highlighted", Toast.LENGTH_SHORT).show();
-
-                    questionCard.postDelayed(() -> {
-                        currentQuestionIndex++;
-                        displayQuestion();
-                    }, 2000);
-                }
+                });
             }
-        }.start();
+        };
+
+        questionTimer.start();
+    }
+
+    private void handleTimeOut() {
+        answered = true;
+        QuizQuestion currentQuestion = questions[currentQuestionIndex];
+        Button correctButton = getButtonByIndex(currentQuestion.correctAnswerIndex);
+
+        // DEDUCT POINTS FOR TIMEOUT
+        quizScore = Math.max(0, quizScore - POINTS_DEDUCTED_TIMEOUT);
+        totalScore = Math.max(gameScore, totalScore - POINTS_DEDUCTED_TIMEOUT);
+        scoreText.setText("Total Score: " + totalScore);
+
+        // Highlight correct answer with outline
+        correctButton.setBackgroundResource(R.drawable.correct_answer_outline);
+        correctButton.setTextColor(ContextCompat.getColor(QuizActivity.this, R.color.green));
+        correctButton.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.drawable.ic_check, 0);
+
+        // Make other options semi-transparent
+        Button[] buttons = {option1, option2, option3, option4};
+        for (Button button : buttons) {
+            if (button != correctButton) {
+                button.setAlpha(0.6f);
+            }
+            button.setEnabled(false);
+        }
+
+        Toast.makeText(QuizActivity.this, "⏰ Time's up! -" + POINTS_DEDUCTED_TIMEOUT + " points. Correct answer highlighted", Toast.LENGTH_LONG).show();
+
+        questionCard.postDelayed(() -> {
+            currentQuestionIndex++;
+            displayQuestion();
+        }, 2000);
+    }
+
+    private void cancelTimer() {
+        if (questionTimer != null) {
+            questionTimer.cancel();
+            questionTimer = null;
+        }
+    }
+
+    private void playSound(MediaPlayer mediaPlayer) {
+        if (mediaPlayer != null) {
+            try {
+                if (mediaPlayer.isPlaying()) {
+                    mediaPlayer.seekTo(0);
+                } else {
+                    mediaPlayer.start();
+                }
+            } catch (Exception e) {
+                // Handle sound playback errors gracefully
+                e.printStackTrace();
+            }
+        }
     }
 
     private void finishQuiz() {
+        // Cancel timer when finishing quiz
+        cancelTimer();
+
         Intent intent = new Intent(QuizActivity.this, ThankYouActivity.class);
         intent.putExtra("gameScore", gameScore);
         intent.putExtra("quizScore", quizScore);
         intent.putExtra("totalScore", totalScore);
         intent.putExtra("totalQuestions", questions.length);
-        intent.putExtra("correctAnswers", quizScore / POINTS_PER_CORRECT);
+
+        // Calculate correct answers based on positive quiz score
+        int correctAnswers = Math.max(0, quizScore / POINTS_PER_CORRECT);
+        intent.putExtra("correctAnswers", correctAnswers);
+
         startActivity(intent);
         finish();
     }
@@ -278,9 +373,11 @@ public class QuizActivity extends AppCompatActivity {
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        if (questionTimer != null) {
-            questionTimer.cancel();
-        }
+
+        // Cancel timer
+        cancelTimer();
+
+        // Release media players
         if (correctSoundPlayer != null) {
             correctSoundPlayer.release();
             correctSoundPlayer = null;
@@ -289,7 +386,33 @@ public class QuizActivity extends AppCompatActivity {
             wrongSoundPlayer.release();
             wrongSoundPlayer = null;
         }
+    }
 
+    @Override
+    protected void onPause() {
+        super.onPause();
+        isActivityPaused = true;
+
+        // Cancel timer when activity is paused (remaining time is already tracked)
+        cancelTimer();
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        isActivityPaused = false;
+
+        // Resume timer if activity is resumed and question is still active
+        if (!answered && currentQuestionIndex < questions.length) {
+            startQuestionTimer();
+        }
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+        // Cancel timer when activity is stopped
+        cancelTimer();
     }
 
     // Inner class for quiz questions
@@ -307,6 +430,3 @@ public class QuizActivity extends AppCompatActivity {
         }
     }
 }
-
-
-

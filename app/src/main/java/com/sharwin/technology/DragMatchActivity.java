@@ -312,11 +312,13 @@ public class DragMatchActivity extends AppCompatActivity {
         });
     }
 
+    // Enhanced DragMatchActivity with point deduction for wrong answers
+
     private void handleCorrectMatch(DragData dragData, LinearLayout dropZone, String color) {
         // Mark item as matched
         itemsMatched[dragData.itemIndex] = true;
         correctMatches++;
-        score += 100;
+        score += 10; // Positive points for correct match
 
         // Update color-specific counters and check for category completion
         boolean categoryJustCompleted = false;
@@ -344,7 +346,7 @@ public class DragMatchActivity extends AppCompatActivity {
                 break;
         }
 
-        // NEW: Check for rapid matching and show appropriate feedback
+        // Check for rapid matching and show appropriate feedback
         long currentTime = System.currentTimeMillis();
         if (currentTime - lastMatchTime < RAPID_MATCH_THRESHOLD) {
             rapidMatchCount++;
@@ -359,19 +361,19 @@ public class DragMatchActivity extends AppCompatActivity {
         // Show instant feedback based on rapid matching
         if (rapidMatchCount > 1) {
             String[] rapidMessages = {
-                    "🔥 On fire! +" + rapidMatchCount,
-                    "⚡ Lightning fast! +" + rapidMatchCount,
-                    "🚀 Combo x" + rapidMatchCount + "!",
-                    "💫 Streak: " + rapidMatchCount + "!"
+                    "🔥 On fire! +10 points",
+                    "⚡ Lightning fast! +10 points",
+                    "🚀 Combo x" + rapidMatchCount + "! +10",
+                    "💫 Streak: " + rapidMatchCount + "! +10"
             };
             showInstantFeedback(rapidMessages[(rapidMatchCount - 2) % rapidMessages.length], true);
         } else {
             String[] successMessages = {
-                    "🎉 Perfect match!",
-                    "⭐ Excellent!",
-                    "🌟 Great job!",
-                    "👏 Amazing!",
-                    "🎯 Bulls-eye!"
+                    "🎉 Perfect match! +10",
+                    "⭐ Excellent! +10 points",
+                    "🌟 Great job! +10",
+                    "👏 Amazing! +10 points",
+                    "🎯 Bulls-eye! +10"
             };
             showInstantFeedback(successMessages[correctMatches % successMessages.length], true);
         }
@@ -395,20 +397,27 @@ public class DragMatchActivity extends AppCompatActivity {
         // Reset rapid match count on wrong answer
         rapidMatchCount = 0;
 
+        // DEDUCT POINTS FOR WRONG ANSWER
+        int pointsDeducted = 5; // Deduct 5 points for wrong answer
+        score = Math.max(0, score - pointsDeducted); // Ensure score doesn't go below 0
+
         // Play error sound
         playSound(wrongSound);
 
-        // Show error message with variety
+        // Show error message with point deduction
         String[] errorMessages = {
-                "🤔 Try a different color!",
-                "💭 Think about the color!",
-                "🔄 Try again!",
-                "🎨 Wrong color zone!"
+                "🤔 Wrong color! -" + pointsDeducted + " points",
+                "💭 Think again! -" + pointsDeducted + " points",
+                "🔄 Try again! -" + pointsDeducted + " points",
+                "🎨 Wrong zone! -" + pointsDeducted + " points"
         };
         showInstantFeedback(errorMessages[(int)(Math.random() * errorMessages.length)], false);
 
         // Animate the card back to original position with shake effect
         animateIncorrectMatch(dragData.cardView);
+
+        // Update score display immediately to show deduction
+        updateScoreDisplay();
     }
 
     // NEW: Instant feedback method replacing showCustomToast
@@ -584,13 +593,14 @@ public class DragMatchActivity extends AppCompatActivity {
         progressAnimator.start();
     }
 
+
     private void showGameComplete() {
         celebrateGameComplete();
 
-        // Delay before showing thank you page
+        // Delay before showing quiz page
         animationHandler.postDelayed(() -> {
             Intent intent = new Intent(DragMatchActivity.this, QuizActivity.class);
-            intent.putExtra("score", score); // pass score
+            intent.putExtra("gameScore", score); // Changed from "score" to "gameScore" to match QuizActivity expectation
             startActivity(intent);
             finish();
         }, 2000); // 2-second delay for animation

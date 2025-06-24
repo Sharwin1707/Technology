@@ -238,7 +238,7 @@
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="🧠 Test your recycling knowledge! Each correct answer = 20 points"
+        android:text="🧠 Test your recycling knowledge! Each correct answer = 10 points"
         android:textSize="14sp"
         android:textColor="#616161"
         android:gravity="center"
