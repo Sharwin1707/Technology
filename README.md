@@ -60,14 +60,7 @@ Transitions, audio playback, and scoring were debugged using Logcat.
 
 Known issues were fixed during development (e.g., MediaPlayer lifecycle, image loading bugs).
 
-📚 Educational Goal
-The app is designed to support STEM education by:
 
-Visualizing how robots "see" using cameras.
-
-Encouraging exploration through play-based learning.
-
-Reinforcing understanding via feedback-rich interaction.
 
 👤 Developer
 Sharwin Rajamogun
